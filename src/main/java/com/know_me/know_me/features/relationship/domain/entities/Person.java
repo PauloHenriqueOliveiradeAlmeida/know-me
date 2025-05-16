@@ -3,13 +3,14 @@ package com.know_me.know_me.features.relationship.domain.entities;
 import com.know_me.know_me.features.relationship.domain.valueobjects.Interest;
 import com.know_me.know_me.shared.domain.valueobjects.ID;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class People {
     public final ID id;
     public final String name;
-    private Set<Interest> _interests;
-    private Set<People> _friends;
+    private final Set<Interest> _interests = new HashSet<>();
+    private final Set<People> _friends = new HashSet<>();
 
     public People(ID id, String name, Set<Interest> interests, Set<People> friends) {
         this.id = id;
