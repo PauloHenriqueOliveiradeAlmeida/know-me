@@ -9,14 +9,12 @@ import java.util.Set;
 public class Person {
     public final ID id;
     public final String name;
-    private Set<Interest> _interests;
-    private Set<Person> _friends;
+    private final Set<Interest> _interests = new HashSet<>();
+    private final Set<Person> _friends = new HashSet<>();
 
     public Person(ID id, String name, Set<Interest> interests, Set<Person> friends) {
         this.id = id;
         this.name = name;
-        this._interests = new HashSet<>();
-        this._friends = new HashSet<>();
         interests.forEach(this::addInterest);
         friends.forEach(this::addFriend);
     }
