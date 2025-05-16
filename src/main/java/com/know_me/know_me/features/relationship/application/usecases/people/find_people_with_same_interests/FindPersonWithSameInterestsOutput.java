@@ -5,4 +5,4 @@ import com.know_me.know_me.shared.domain.valueobjects.ID;
 
 import java.util.Set;
 
-public record FindPeopleWithSameInterestsOutput(ID id, String name, Set<Interest> interests) { }
+public record FindPersonWithSameInterestsOutput(ID id, String name, Set<Interest> interests) { }
