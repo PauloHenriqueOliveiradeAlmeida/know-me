@@ -31,4 +31,8 @@ public class PersonRepository {
     public List<Person> findPeopleWithSameInterests(ID id) {
         return peopleRepository.findPeopleWithSameInterests(id.value()).stream().map(PeopleMapper::toDomain).toList();
     }
+
+    public  List<Person> findRelatedFriendsByPersonId(ID id) {
+        return peopleRepository.findRelatedFriendsByPersonId(id.value()).stream().map(PeopleMapper::toDomain).toList();
+    }
 }

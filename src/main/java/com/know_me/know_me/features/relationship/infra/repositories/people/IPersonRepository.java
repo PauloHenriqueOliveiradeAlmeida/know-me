@@ -16,4 +16,13 @@ public interface IPersonRepository extends Neo4jRepository<PersonEntity, UUID> {
             RETURN other, r, collect(otherInterests) as interests
         """)
     List<PersonEntity> findPeopleWithSameInterests(UUID id);
+
+    @Query("""
+            MATCH (p:Person {id: $id})-[:IS_FRIEND_OF]->(:Person)<-[:IS_FRIEND_OF]-(other:Person)
+            WHERE p.id <> other.id
+            WITH DISTINCT other
+            OPTIONAL MATCH (other)-[r:HAS_INTEREST]->(i:Interest)
+            RETURN other
+        """)
+    List<PersonEntity> findRelatedFriendsByPersonId(UUID id);
 }
