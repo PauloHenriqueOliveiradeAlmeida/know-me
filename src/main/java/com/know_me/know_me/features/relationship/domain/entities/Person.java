@@ -3,22 +3,23 @@ package com.know_me.know_me.features.relationship.domain.entities;
 import com.know_me.know_me.features.relationship.domain.valueobjects.Interest;
 import com.know_me.know_me.shared.domain.valueobjects.ID;
 
+import java.util.HashSet;
 import java.util.Set;
 
-public class People {
+public class Person {
     public final ID id;
     public final String name;
-    private Set<Interest> _interests;
-    private Set<People> _friends;
+    private final Set<Interest> _interests = new HashSet<>();
+    private final Set<Person> _friends = new HashSet<>();
 
-    public People(ID id, String name, Set<Interest> interests, Set<People> friends) {
+    public Person(ID id, String name, Set<Interest> interests, Set<Person> friends) {
         this.id = id;
         this.name = name;
         interests.forEach(this::addInterest);
         friends.forEach(this::addFriend);
     }
 
-    public Set<People> getFriends() {
+    public Set<Person> getFriends() {
         return _friends;
     }
 
@@ -33,7 +34,7 @@ public class People {
         _interests.add(interest);
     }
 
-    public void addFriend(People friend) {
+    public void addFriend(Person friend) {
         if (friend == null) {
             throw new IllegalArgumentException("Friend cannot be null");
         }
