@@ -5,6 +5,7 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,13 +18,14 @@ public class PersonEntity {
     public final String name;
 
     @Relationship(value = "HAS_INTEREST", direction = Relationship.Direction.OUTGOING)
-    public final Set<InterestEntity> interests;
-    public final Set<PersonEntity> friends;
+    public Set<InterestEntity> interests;
 
-    public PersonEntity(UUID id, String name, Set<InterestEntity> interests, Set<PersonEntity> friends) {
+    @Relationship(value = "IS_FRIEND_OF", direction = Relationship.Direction.OUTGOING)
+    public Set<IsFriendOfRelation> friends;
+
+    public PersonEntity(UUID id, String name, Set<InterestEntity> interests) {
         this.id = id;
         this.name = name;
         this.interests = interests;
-        this.friends = friends;
     }
 }
