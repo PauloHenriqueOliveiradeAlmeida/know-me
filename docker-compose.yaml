@@ -1,0 +1,24 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=neo4j://localhost:7687
+      - DATABASE_USERNAME=neo4j
+      - DATABASE_PASSWORD=Testando123!
+
+  neo4j:
+    build: ./neo4j
+    container_name: neo4j
+    ports:
+      - "7687:7687"
+      - "7474:7474"
+    environment:
+      - NEO4J_AUTH=neo4j/neo4j
+      - NEO4J_PLUGINS='["apoc"]'
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_PASSWORD=Testando123!
+    volumes:
+      - ./neo4j/data:/import
+    command: ["bash", "/var/lib/neo4j/scripts/entrypoint.sh"]

@@ -12,7 +12,7 @@ public class Person {
     private final Set<Interest> _interests = new HashSet<>();
     private final Set<Person> _friends = new HashSet<>();
 
-    public Person(ID id, String name, Set<Interest> interests, Set<Person> friends) {
+    public Person(ID id, String name, Set<String> interests, Set<Person> friends) {
         this.id = id;
         this.name = name;
         interests.forEach(this::addInterest);
@@ -27,22 +27,50 @@ public class Person {
         return _interests;
     }
 
-    public void addInterest(Interest interest) {
-        if (interest == null) {
-            throw new IllegalArgumentException("Interest cannot be null");
+    public void addInterest(String interestName) {
+        Interest interest = new Interest(interestName);
+        boolean isAlreadyInterest = _interests.stream().anyMatch(interest1 -> interest1.equals(interest));
+        if (isAlreadyInterest) {
+            throw new IllegalArgumentException("Pessoa já possui esse interesse");
         }
         _interests.add(interest);
     }
 
+    public void removeInterest(String interestName) {
+        Interest interest = new Interest(interestName);
+        boolean isAlreadyInterest = _interests.stream().anyMatch(i -> i.value().equals(interest.value()));
+        if (!isAlreadyInterest) {
+            throw new IllegalArgumentException("Pessoa não possui esse interesse");
+        }
+        _interests.removeIf(i -> i.value().equals(interest.value()));
+    }
+
     public void addFriend(Person friend) {
         if (friend == null) {
-            throw new IllegalArgumentException("Friend cannot be null");
+            throw new IllegalArgumentException("Amigo não pode ser nulo");
         }
 
-        if (friend.equals(this)) {
-            throw new IllegalArgumentException("You cannot be your friend");
+        if (friend.id.equals(id)) {
+            throw new IllegalArgumentException("Você não pode ser amigo de si mesmo");
+        }
+
+        boolean isAlreadyFriend = _friends.stream().anyMatch(friendPerson -> friendPerson.id.equals(friend.id));
+        if (isAlreadyFriend) {
+            throw new IllegalArgumentException("Pessoa já possui esse amigo");
         }
 
         _friends.add(friend);
+    }
+
+    public void removeFriend(Person friend) {
+        if (friend == null) {
+            throw new IllegalArgumentException("Amigo não pode ser nulo");
+        }
+
+        boolean isAlreadyFriend = _friends.stream().anyMatch(friendPerson -> friendPerson.id.equals(friend.id));
+        if (!isAlreadyFriend) {
+            throw new IllegalArgumentException("Pessoa não possui esse amigo");
+        }
+        _friends.removeIf(f -> f.id.value().equals(friend.id.value()));
     }
 }

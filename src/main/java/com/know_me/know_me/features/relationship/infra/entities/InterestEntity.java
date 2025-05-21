@@ -11,10 +11,9 @@ public class InterestEntity {
     public final String name;
 
     @Relationship(type = "HAS_INTEREST", direction = Relationship.Direction.OUTGOING)
-    public final Set<PersonEntity> peoples;
+    public Set<PersonEntity> persons;
 
-    public InterestEntity(String name, Set<PersonEntity> peoples) {
+    public InterestEntity(String name) {
         this.name = name;
-        this.peoples = peoples;
-    }
+     }
 }
